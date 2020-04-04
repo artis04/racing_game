@@ -26,7 +26,7 @@ x = 50
 y = 50
 width = 16
 height = 20
-vel = 20
+vel = 35
 
 run = True
 while run:
