@@ -93,7 +93,8 @@ while run:
 
         print("#"*20)
         speed_y = -1
-        xy = move(x, y, speed, angle * 0.00174533)
+        radians = angle*math.pi/180
+        xy = move(x, y, speed, radians)
         print(x, y)
         print(xy)
         print(x,y)
