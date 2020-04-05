@@ -24,9 +24,9 @@ x = 712
 y = 823
 speed_y = 0
 speed_x = 3
-speed = 3
-angle = 90
-angle_attack = 10
+speed = 30
+angle = 0
+angle_attack = 8
 
 
 # image = pygame.image.load('images/car1/unknown.png')
@@ -89,27 +89,20 @@ while run:
         result = speed_y * cos(angle)
         print('angle ', angle)
         print(result)
-
-
-        print("#"*20)
-        speed_y = -1
-        radians = angle*math.pi/180
-        xy = move(x, y, speed, radians)
-        print(x, y)
-        print(xy)
-        print(x,y)
-
-        print(xy[1])
-
-
+        if not speed > 30:
+            speed += 3.3
 
     if keys[pygame.K_DOWN] and y < scr_height:
-        speed_y = 1
+        if not speed < -10:
+            speed -= 3
 
     if not keys[pygame.K_DOWN] and not keys[pygame.K_UP] and not keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
-        speed_x = 0
-        speed_y = 0
-
+        if speed > 0:
+            speed -= 0.5
+        elif speed < 0:
+            speed += 0.5
+        else:
+            speed = 0
 
 
     # update display
@@ -122,11 +115,15 @@ while run:
 
     surf = pygame.transform.rotate(image_surf, angle)
 
+
+
+    radians = angle * math.pi / 180
+    xy = move(x, y, speed, radians)
+
+
     y = xy[1]
     x = xy[0]
     win.blit(surf,(x, y))
-
-
 
 
 
