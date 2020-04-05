@@ -27,7 +27,7 @@ speed_x = 3
 speed = 0
 angle = 0
 angle_attack = 8
-
+laps = 0
 
 # image = pygame.image.load('images/car1/unknown.png')
 # image = win.blit(pygame.image.load('images/car1/car1.png'), (x, y))
@@ -52,6 +52,12 @@ def move(x, y, speed, angle):
 
     return new_x, new_y
 
+def hit_border(x, y):
+    for xc in border[0]:
+        if int(x) >= int(xc):
+            return False
+
+
 while run:
     pygame.time.delay(100)
 
@@ -60,19 +66,17 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-        # if event.type == pygame.MOUSEBUTTONDOWN:
-        #     mx, my = pygame.mouse.get_pos()
-        #     location = str(mx) + " " + str(my)
-        #     border.append(location)
-        #     print(border)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mx, my = pygame.mouse.get_pos()
+            location = str(mx) + " " + str(my)
+            # border.append(location)
+            print(location)
 
 
     # on arrow keys pressed event
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and x > speed_x:
-        x -= speed_x
         angle += angle_attack
-        speed_x = -1
         if angle > 360:
             angle = 0
 
@@ -124,7 +128,10 @@ while run:
     y = xy[1]
     x = xy[0]
     win.blit(surf,(x, y))
-
+    if x < 750 and x >= 717 and y >= 737 and y <= 909:
+        print("Finish line")
+        laps += 1
+        print("Laps ", laps)
 
 
 
