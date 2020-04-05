@@ -36,6 +36,8 @@ car_image.set_colorkey((0, 0, 0))  # removes black background from image
 
 car1_sound = pygame.mixer.Sound("sound/cars/car1/boost.wav")  # Loads car sound as car1_sound
 music2 = pygame.mixer.music.load("sound/music/music2.wav")  # Loads background music
+pygame.mixer.Sound.set_volume(car1_sound, 0.1)  # Sets volume for car1 sound
+pygame.mixer.music.set_volume(0.01)  # Sets volume for music
 pygame.mixer.music.play(-1)  # Plays background music
 
 border = ['163 140', '133 190', '109 214', '85 288', '70 404', '76 481', '81 578', '96 681', '129 760', '178 819',
