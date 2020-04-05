@@ -24,6 +24,7 @@ x = 712
 y = 823
 speed_y = 0
 speed_x = 3
+speed = 3
 angle = 90
 angle_attack = 10
 
@@ -40,9 +41,15 @@ xy = start
 run = True
 border = ['163 140', '133 190', '109 214', '85 288', '70 404', '76 481', '81 578', '96 681', '129 760', '178 819', '248 865', '337 890', '430 899', '546 913', '661 911', '790 914', '928 905', '1021 885', '1110 857', '1112 862', '1175 825', '1229 774', '1267 699', '1289 622', '1290 538', '1266 445', '1235 383', '1179 332', '1132 310', '1072 277', '979 264', '900 263', '831 283', '774 297', '718 316', '694 324', '682 305', '701 262', '715 218', '724 172', '710 116', '683 89', '644 69', '610 51', '533 42', '470 38', '391 39', '302 49', '246 74', '200 93', '165 123', '151 159']
 
-def move(x, y, speed_x, speed_y, angle):
-    new_x = x + (speed_x*math.cos(angle))
-    new_y = y - (speed_y*math.sin(angle))
+def move(x, y, speed, angle):
+    mathCos =  math.cos(angle)
+    mathSin = math.sin(angle)
+
+    new_y = y - mathSin * speed
+    new_x = x + mathCos * speed
+
+
+
     return new_x, new_y
 
 while run:
@@ -86,7 +93,7 @@ while run:
 
         print("#"*20)
         speed_y = -1
-        xy = move(x, y, speed_x, speed_y, angle * 0.00174533)
+        xy = move(x, y, speed, angle * 0.00174533)
         print(x, y)
         print(xy)
         print(x,y)
