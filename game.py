@@ -29,6 +29,9 @@ angle = 0
 angle_attack = 8
 laps = 0
 
+onetime = 0
+
+
 # image = pygame.image.load('images/car1/unknown.png')
 # image = win.blit(pygame.image.load('images/car1/car1.png'), (x, y))
 start = 712, 823  # start position on screen
@@ -37,6 +40,10 @@ image_surf.set_colorkey((0, 0, 0))  # removes black background from image
 # win.blit(image_surf, start)
 
 xy = start
+
+
+car1_sound = pygame.mixer.Sound("sound/cars/car1/boost.wav")
+car1_max_sound = pygame.mixer.Sound("sound/cars/car1/max.wav")
 
 run = True
 border = ['163 140', '133 190', '109 214', '85 288', '70 404', '76 481', '81 578', '96 681', '129 760', '178 819', '248 865', '337 890', '430 899', '546 913', '661 911', '790 914', '928 905', '1021 885', '1110 857', '1112 862', '1175 825', '1229 774', '1267 699', '1289 622', '1290 538', '1266 445', '1235 383', '1179 332', '1132 310', '1072 277', '979 264', '900 263', '831 283', '774 297', '718 316', '694 324', '682 305', '701 262', '715 218', '724 172', '710 116', '683 89', '644 69', '610 51', '533 42', '470 38', '391 39', '302 49', '246 74', '200 93', '165 123', '151 159']
@@ -90,6 +97,16 @@ while run:
 
     if keys[pygame.K_UP] and y > 0:
 
+        if onetime == 0:
+            pygame.mixer.Sound.stop(car1_sound)
+            pygame.mixer.Sound.play(car1_sound)
+            onetime = 1
+        if speed >= 29:
+            # pygame.mixer.Sound.stop(car1_sound)
+            # pygame.mixer.Sound.play(car1_max_sound)
+            pass
+
+
         result = speed_y * cos(angle)
         print('angle ', angle)
         print(result)
@@ -107,7 +124,10 @@ while run:
             speed += 0.5
         else:
             speed = 0
-
+    if not keys[pygame.K_UP]:
+        onetime = 0
+        pygame.mixer.Sound.stop(car1_sound)
+        pygame.mixer.Sound.stop(car1_max_sound)
 
     # update display
     win.fill((0, 0, 0))
