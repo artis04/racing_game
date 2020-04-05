@@ -73,12 +73,20 @@ while run:  # Loops pygame
 
     keys = pygame.key.get_pressed()  # On arrow keys triggered
     if keys[pygame.K_LEFT]:  # On left arrow key triggered
-        angle += angle_attack  # Increases angle for car
+        if speed > 0:
+            angle += angle_attack  # If speed is more than 0 then increases angle for car
+        elif speed < 0:
+            angle -= angle_attack  # If speed is less than 0 then reduce angle for car
+        # if speed == 0 then nothing happens
         if angle > 360:  # in case angle reaches 360 degrees, then it goes back to 0
             angle = 0
 
     if keys[pygame.K_RIGHT]:  # On right arrow key triggered
-        angle -= angle_attack  # Reduces cars angle
+        if speed > 0:
+            angle -= angle_attack  # If speed is more than 0 then reduces cars angle
+        elif speed < 0:
+            angle += angle_attack  # If speed is less than 0 then increases angle for car
+
         if angle < -360:  # In case angle reaches -360 degrees, then it goes back to 0
             angle = 0
 
