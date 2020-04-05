@@ -1,3 +1,3 @@
-import pyautogui
+import uuid
 
-borders = []
+print(uuid.uuid1())
