@@ -24,7 +24,7 @@ x = 712
 y = 823
 speed_y = 0
 speed_x = 3
-speed = 30
+speed = 0
 angle = 0
 angle_attack = 8
 
