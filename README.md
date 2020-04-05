@@ -1,5 +1,5 @@
 # racing_game
-2D racing game created in pygame.
+2D racing game created using pygame.
 
 Key binds:
 m - Mute music
