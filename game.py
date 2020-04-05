@@ -1,11 +1,9 @@
 import pygame
 import math
-pygame.init()
-font= pygame.font.SysFont('Fonts/ONEDAY.ttf',24)
+import os
+pygame.init()  # For text overlays
+font = pygame.font.SysFont('Fonts/ONEDAY.ttf', 24)  # Choose font
 
-
-
-pygame.init()
 # scr_width = 1650 # --> using for first track
 # scr_height = 927
 scr_width = 1350
@@ -32,14 +30,23 @@ laps = 0  # Lap count start
 speed_increase = 3.3  # How fast car increases speed
 onetime = 0  # Thing for cars sound
 ticks = 0  # Game ticks for lap count
-track1= True
-
+track1 = False
+number = 0
 
 car_image = pygame.image.load('images/cars/car1.png').convert()  # takes car image from images/cars/car1.png
 car_image.set_colorkey((0, 0, 0))  # removes black background from image
 
 car1_sound = pygame.mixer.Sound("sound/cars/car1/boost.wav")  # Loads car sound as car1_sound
 music2 = pygame.mixer.music.load("sound/music/music2.wav")  # Loads background music
+
+music = []
+for (dirpath, dirnames, filenames) in os.walk("sound/music"):  # Searches all files from sound/music folder
+    for i in filenames:
+        name = ("sound/music/" + i)  # create full path to each music in "music" list
+        music.append(name)
+
+now_playing = music[1]  # now playing sound name
+
 pygame.mixer.Sound.set_volume(car1_sound, 0.1)  # Sets volume for car1 sound
 pygame.mixer.music.set_volume(0.1)  # Sets volume for music
 pygame.mixer.music.play(-1)  # Plays background music
@@ -122,16 +129,23 @@ while run:  # Loops pygame
     if not keys[pygame.K_UP]:  # if up arrow key is pressed stop car sound and restart spam prevention
         onetime = 0
         pygame.mixer.Sound.stop(car1_sound)
+
     if keys[pygame.K_m]:
         pygame.mixer.music.stop()
-        if track1 == True:
 
-            pygame.mixer.music.load('sound/music/music2.wav')
-            track1= False
-        else:
-            pygame.mixer.music.load('sound/music/music1.wav')
-            track1= True
-        pygame.mixer.music.play(-1)
+    if keys[pygame.K_n]:    # If n key pressed then cycle through musics in sound/music folder
+        pygame.mixer.music.stop()  # First stop all previous music
+        i = 1
+        for musik in music:  # Go through every music in "music" list
+            if musik == now_playing:  # When we find music which is playing now then we save number "i"
+                number = i
+            i += 1  # In case we did not find it then add 1 to variable "i"
+        try:
+            now_playing = music[number]  # try to get next song location
+        except IndexError:  # In case of last song we will get error, so we play first song again
+            now_playing = music[0]
+        pygame.mixer.music.load(now_playing)  # Load now_playing music
+        pygame.mixer.music.play(-1)  # play music
 
     # Display update
     win.fill((0, 0, 0))
@@ -152,8 +166,8 @@ while run:  # Loops pygame
         laps += 1  # add 1 more lap to count
         print("Laps ", laps)  # Prints lap count
 
-    label = font.render('laps ' + str(laps), 1, (255, 255, 255))
-    win.blit(label,(100,20))
+    label = font.render('laps ' + str(laps), 1, (255, 255, 255))  # create laps label
+    win.blit(label, (100, 20))  # Displays lap counter label on screen
 
     pygame.display.update()  # updates display
 
