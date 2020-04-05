@@ -1,5 +1,8 @@
 import pygame
 import math
+pygame.init()
+font= pygame.font.SysFont('Fonts/ONEDAY.ttf',24)
+
 
 
 pygame.init()
@@ -24,11 +27,12 @@ max_speed = 30  # Max speed for the car
 back_max_speed = 10  # Max reverse speed for the car
 speed = 0  # Starting speed
 angle = 0  # Starting angle of the car
-angle_attack = 8  # Angle attack pressing left/right arrow (degrees)
+angle_attack = 10  # Angle attack pressing left/right arrow (degrees)
 laps = 0  # Lap count start
 speed_increase = 3.3  # How fast car increases speed
 onetime = 0  # Thing for cars sound
 ticks = 0  # Game ticks for lap count
+track1= True
 
 
 car_image = pygame.image.load('images/cars/car1.png').convert()  # takes car image from images/cars/car1.png
@@ -37,7 +41,7 @@ car_image.set_colorkey((0, 0, 0))  # removes black background from image
 car1_sound = pygame.mixer.Sound("sound/cars/car1/boost.wav")  # Loads car sound as car1_sound
 music2 = pygame.mixer.music.load("sound/music/music2.wav")  # Loads background music
 pygame.mixer.Sound.set_volume(car1_sound, 0.1)  # Sets volume for car1 sound
-pygame.mixer.music.set_volume(0.01)  # Sets volume for music
+pygame.mixer.music.set_volume(0.1)  # Sets volume for music
 pygame.mixer.music.play(-1)  # Plays background music
 
 border = ['163 140', '133 190', '109 214', '85 288', '70 404', '76 481', '81 578', '96 681', '129 760', '178 819',
@@ -118,6 +122,16 @@ while run:  # Loops pygame
     if not keys[pygame.K_UP]:  # if up arrow key is pressed stop car sound and restart spam prevention
         onetime = 0
         pygame.mixer.Sound.stop(car1_sound)
+    if keys[pygame.K_m]:
+        pygame.mixer.music.stop()
+        if track1 == True:
+
+            pygame.mixer.music.load('sound/music/music2.wav')
+            track1= False
+        else:
+            pygame.mixer.music.load('sound/music/music1.wav')
+            track1= True
+        pygame.mixer.music.play(-1)
 
     # Display update
     win.fill((0, 0, 0))
@@ -138,7 +152,8 @@ while run:  # Loops pygame
         laps += 1  # add 1 more lap to count
         print("Laps ", laps)  # Prints lap count
 
-
+    label = font.render('laps ' + str(laps), 1, (255, 255, 255))
+    win.blit(label,(100,20))
 
     pygame.display.update()  # updates display
 
